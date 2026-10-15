@@ -1,0 +1,29 @@
+﻿# Compilación .NET y binarios
+consultant-host/bin/
+**/bin/
+**/obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Archivos de clientes, secretos y certificados
+*.odooai
+**/*private*.pem
+**/*.pfx
+secrets/
+.env
+
+# Inspecciones y logs
+*.inspect.ndjson
+*.log
+logs/
+tmp/
+work/
+scratch/
+
+# IDE y Sistema Operativo
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

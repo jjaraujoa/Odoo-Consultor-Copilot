@@ -1,0 +1,188 @@
+{
+  "schema_version": 2,
+  "phase": 2,
+  "name": "replica_phase2_app",
+  "description": "Ejemplo portable de una app Studio estructural.",
+  "source": {
+    "environment": "staging",
+    "odoo_version": "19",
+    "captured_on": "2026-08-10",
+    "contains_business_records": false
+  },
+  "dependencies": {
+    "models": ["res.partner", "res.partner.category", "res.currency"],
+    "features": ["studio"]
+  },
+  "models": [
+    {
+      "key": "demo_model",
+      "model": "x_odooai_phase2_demo",
+      "name": "Demo Fase 2",
+      "mode": "create",
+      "order": "x_name asc"
+    }
+  ],
+  "fields": [
+    {
+      "key": "attachment_name",
+      "model": "x_odooai_phase2_demo",
+      "name": "x_attachment_name",
+      "label": "Nombre del archivo",
+      "type": "char",
+      "mode": "create"
+    },
+    {
+      "key": "attachment",
+      "model": "x_odooai_phase2_demo",
+      "name": "x_attachment",
+      "label": "Adjunto",
+      "type": "binary",
+      "filename_field": "x_attachment_name",
+      "mode": "create"
+    },
+    {
+      "key": "partner",
+      "model": "x_odooai_phase2_demo",
+      "name": "x_partner_id",
+      "label": "Contacto",
+      "type": "many2one",
+      "relation": "res.partner",
+      "on_delete": "set null",
+      "mode": "create"
+    },
+    {
+      "key": "partner_name",
+      "model": "x_odooai_phase2_demo",
+      "name": "x_partner_name",
+      "label": "Nombre del contacto",
+      "type": "char",
+      "related": "x_partner_id.name",
+      "stored": false,
+      "mode": "create"
+    },
+    {
+      "key": "currency",
+      "model": "x_odooai_phase2_demo",
+      "name": "x_currency_id",
+      "label": "Moneda",
+      "type": "many2one",
+      "relation": "res.currency",
+      "on_delete": "set null",
+      "mode": "create"
+    },
+    {
+      "key": "amount",
+      "model": "x_odooai_phase2_demo",
+      "name": "x_amount",
+      "label": "Importe",
+      "type": "monetary",
+      "currency_field": "x_currency_id",
+      "mode": "create"
+    },
+    {
+      "key": "total_label",
+      "model": "x_odooai_phase2_demo",
+      "name": "x_total_label",
+      "label": "Importe en texto",
+      "type": "char",
+      "compute_file": "compute_total_label.py",
+      "compute_sha256": "8d55097d565535bcbff7f28e8602c871247b2665829622f9c29e7340e1d368a2",
+      "depends": "x_amount",
+      "mode": "create"
+    },
+    {
+      "key": "status",
+      "model": "x_odooai_phase2_demo",
+      "name": "x_status",
+      "label": "Estado",
+      "type": "selection",
+      "selection": [
+        { "value": "draft", "label": "Borrador", "sequence": 10 },
+        { "value": "ready", "label": "Listo", "sequence": 20 }
+      ],
+      "mode": "create"
+    },
+    {
+      "key": "tags",
+      "model": "x_odooai_phase2_demo",
+      "name": "x_tag_ids",
+      "label": "Etiquetas",
+      "type": "many2many",
+      "relation": "res.partner.category",
+      "relation_table": "x_odooai_phase2_demo_res_partner_category_rel",
+      "column1": "x_demo_id",
+      "column2": "category_id",
+      "mode": "create"
+    },
+    {
+      "key": "notes",
+      "model": "x_odooai_phase2_demo",
+      "name": "x_notes",
+      "label": "Notas",
+      "type": "html",
+      "sanitize": true,
+      "mode": "create"
+    }
+  ],
+  "views": [
+    {
+      "key": "demo_form",
+      "model": "x_odooai_phase2_demo",
+      "type": "form",
+      "operation": "create",
+      "arch_file": "views/form.xml",
+      "arch_sha256": "e1c2cbb9a2355e40fc751565f1294f258d1c857584c5566861e6e96017b20120",
+      "priority": 16,
+      "active": true
+    },
+    {
+      "key": "demo_list",
+      "model": "x_odooai_phase2_demo",
+      "type": "list",
+      "operation": "create",
+      "arch_file": "views/list.xml",
+      "arch_sha256": "8e2769d0972bacbc1c3b8411199b0669861b541fb8cdee7a52f34d16b53fc432",
+      "priority": 16,
+      "active": true
+    }
+  ],
+  "window_actions": [
+    {
+      "key": "demo_action",
+      "name": "Demo Fase 2",
+      "res_model": "x_odooai_phase2_demo",
+      "view_mode": "list,form",
+      "target": "current",
+      "mode": "create"
+    }
+  ],
+  "menus": [
+    {
+      "key": "demo_root",
+      "name": "Demo Fase 2",
+      "sequence": 90,
+      "mode": "create"
+    },
+    {
+      "key": "demo_records",
+      "name": "Registros",
+      "parent_key": "demo_root",
+      "action_key": "demo_action",
+      "sequence": 10,
+      "mode": "create"
+    }
+  ],
+  "deployment_order": [
+    "models",
+    "fields",
+    "views",
+    "window_actions",
+    "menus"
+  ],
+  "excluded_artifacts": [
+    "business_records",
+    "access_control",
+    "automations",
+    "reports"
+  ]
+}

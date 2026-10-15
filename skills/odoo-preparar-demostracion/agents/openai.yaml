@@ -1,0 +1,5 @@
+interface:
+  display_name: "Preparar demostración Odoo"
+  short_description: "Investiga y ensaya demos verificables de Odoo"
+  brand_color: "#714B67"
+  default_prompt: "Usa $odoo-preparar-demostracion para investigar y preparar una demostración funcional verificable en staging."

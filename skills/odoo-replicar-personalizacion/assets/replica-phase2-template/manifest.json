@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "phase": 2,
+  "name": "reemplazar_slug",
+  "description": "Describir la estructura sin datos de negocio.",
+  "source": {
+    "environment": "staging",
+    "odoo_version": "19",
+    "captured_on": "YYYY-MM-DD",
+    "contains_business_records": false,
+    "metadata_hashes": {}
+  },
+  "dependencies": {
+    "models": [],
+    "features": ["studio"]
+  },
+  "models": [],
+  "fields": [],
+  "views": [],
+  "window_actions": [],
+  "menus": [],
+  "deployment_order": [
+    "models",
+    "fields",
+    "views",
+    "window_actions",
+    "menus"
+  ],
+  "excluded_artifacts": [
+    "all_business_records"
+  ]
+}

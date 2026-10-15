@@ -1,0 +1,41 @@
+{
+  "entorno": "staging",
+  "demo_slug": "marketing-comercial",
+  "aplicacion": "marketing",
+  "objetivo": "Demostrar captación, nutrición y medición comercial con registros relacionados.",
+  "requerimientos": [
+    "Mostrar un lead con atribución UTM",
+    "Comparar dos borradores editables",
+    "Revisar una automatización inactiva"
+  ],
+  "configuracion": {
+    "utm": {
+      "source_name": "Evento sectorial",
+      "medium_name": "Evento",
+      "campaign_name": "Encuentro empresarial",
+      "lead_name": "Solicitud de diagnóstico",
+      "contact_name": "Laura Gómez"
+    },
+    "mailing": {
+      "enabled": true,
+      "subject_a": "Descubra una experiencia comercial conectada",
+      "subject_b": "Convierta interés en oportunidades medibles",
+      "image_required": true,
+      "image_asset": {
+        "file": "hero.png",
+        "sha256": "REEMPLAZAR_CON_SHA256_REAL",
+        "alt": "Vista de la solución"
+      },
+      "personalization_variable": "recipient_name"
+    },
+    "automation": {
+      "enabled": true,
+      "title": "Nutrición de oportunidades",
+      "target_model": "crm.lead",
+      "audience_filter": "has_email",
+      "delay_days": 2,
+      "trigger": "begin",
+      "branch_trigger": "mail_open"
+    }
+  }
+}

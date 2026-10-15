@@ -1,0 +1,77 @@
+name: CI & Release
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-test:
+    name: Build & Test (Windows)
+    runs-on: windows-latest
+    env:
+      PYTHONUTF8: '1'
+      PYTHONIOENCODING: 'utf-8'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Open Source Pureness Audit
+        shell: bash
+        run: python scripts/Auditar-OpenSource.py
+
+      - name: Build OdooConsultor.dll
+        shell: powershell
+        run: .\scripts\Build-OdooConsultor.ps1
+
+      - name: Run Regression Suite (199 Self-Tests & MCP Validation)
+        shell: powershell
+        run: .\scripts\Test-OdooConsultor.ps1 -ExecutablePath .\consultant-host\bin\OdooConsultor.dll
+
+      - name: Upload Binary Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: OdooConsultor-v1.0.0-windows
+          path: |
+            consultant-host/bin/OdooConsultor.dll
+            consultant-host/bin/OdooConsultor.dll.sha256
+          retention-days: 14
+
+  release:
+    name: Publish GitHub Release
+    needs: build-and-test
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: OdooConsultor-v1.0.0-windows
+          path: release-assets
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release-assets/OdooConsultor.dll
+            release-assets/OdooConsultor.dll.sha256
+          generate_release_notes: true
+          draft: false
+          prerelease: false

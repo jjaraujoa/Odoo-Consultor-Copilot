@@ -1,0 +1,4 @@
+interface:
+  display_name: "Replicar personalización Odoo"
+  short_description: "Captura y replica cambios selectivos de Odoo"
+  default_prompt: "Usa $odoo-replicar-personalizacion para capturar y validar una personalización selectiva de Odoo."

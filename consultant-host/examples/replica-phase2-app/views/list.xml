@@ -1,0 +1,7 @@
+<list string="Demo Fase 2">
+  <field name="x_name"/>
+  <field name="x_partner_id"/>
+  <field name="x_amount"/>
+  <field name="x_currency_id"/>
+  <field name="x_status"/>
+</list>

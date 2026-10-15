@@ -1,0 +1,77 @@
+{
+  "entorno": "staging",
+  "demo_slug": "marketing-comercial-v2",
+  "aplicacion": "marketing",
+  "objetivo": "Demostrar captación web, diagnóstico, nutrición A/B y automatización comercial sin efectos externos.",
+  "requerimientos": [
+    "Captar un lead desde una landing no publicada",
+    "Recoger necesidades mediante una encuesta",
+    "Comparar dos variantes de Email Marketing",
+    "Mostrar una campaña y una rama de automatización inactivas",
+    "Explicar atribución UTM y métricas"
+  ],
+  "configuracion": {
+    "utm": {
+      "source_name": "Meta Ads",
+      "medium_name": "Social pagado",
+      "campaign_name": "Diagnóstico B2B",
+      "lead_name": "Solicitud de diagnóstico",
+      "contact_name": "Contacto ficticio"
+    },
+    "website": {
+      "enabled": true,
+      "headline": "Convierta interés en oportunidades medibles",
+      "subtitle": "Un recorrido comercial conectado desde la captación hasta el seguimiento.",
+      "benefits": ["Captación centralizada", "Seguimiento trazable", "Medición por campaña"],
+      "cta_label": "Solicitar información",
+      "legal_text": "Use únicamente datos ficticios y correos example.invalid durante esta demostración.",
+      "layout": "split_form"
+    },
+    "survey": {
+      "enabled": true,
+      "title": "Diagnóstico de prioridades comerciales",
+      "description": "Encuesta ficticia para orientar la conversación de descubrimiento.",
+      "questions": [
+        {
+          "type": "simple_choice",
+          "label": "¿Cuál es su prioridad principal?",
+          "required": true,
+          "options": ["Captación", "Automatización", "Medición"]
+        },
+        {
+          "type": "matrix",
+          "label": "Valore el estado de cada capacidad",
+          "required": true,
+          "options": ["Inicial", "En progreso", "Consolidado"],
+          "rows": ["Captación", "Seguimiento", "Analítica"]
+        },
+        {
+          "type": "text_box",
+          "label": "¿Qué resultado espera del proyecto?",
+          "required": false
+        }
+      ]
+    },
+    "mailing": {
+      "enabled": true,
+      "subject_a": "Descubra una experiencia comercial conectada",
+      "subject_b": "Convierta más oportunidades con información centralizada",
+      "preheader": "Una demostración segura con datos ficticios.",
+      "headline": "Una mejor forma de gestionar oportunidades",
+      "body": "Centralice la captación, el seguimiento y la medición en un mismo flujo.",
+      "cta_label": "Conocer más",
+      "ab_percentage": 50,
+      "image_url": "https://example.invalid/assets/demo-marketing.png",
+      "variables": ["recipient_name"]
+    },
+    "automation": {
+      "enabled": true,
+      "title": "Nutrición de contactos ficticios",
+      "target_model": "mailing.contact",
+      "audience_filter": "has_email",
+      "delay_days": 2,
+      "trigger": "begin",
+      "branch_trigger": "mail_open"
+    }
+  }
+}

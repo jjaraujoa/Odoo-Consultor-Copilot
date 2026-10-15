@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "name": "reemplazar_slug",
+  "description": "Describir la funcionalidad sin datos de negocio.",
+  "source": {
+    "environment": "staging",
+    "odoo_version": "19",
+    "captured_on": "YYYY-MM-DD",
+    "contains_business_records": false,
+    "metadata_hashes": {}
+  },
+  "dependencies": {
+    "models": [],
+    "features": []
+  },
+  "fields": [],
+  "views": [],
+  "actions": [],
+  "deployment_order": [],
+  "excluded_artifacts": [
+    "all_business_records"
+  ]
+}

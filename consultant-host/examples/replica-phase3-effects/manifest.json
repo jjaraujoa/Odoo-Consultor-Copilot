@@ -1,0 +1,178 @@
+{
+  "schema_version": 2,
+  "phase": 3,
+  "name": "Efectos controlados de ejemplo",
+  "description": "Ejemplo portable de automatizaciones y acciones Fase 3 sobre contactos.",
+  "source": {
+    "environment": "staging",
+    "odoo_version": "19",
+    "captured_on": "2026-08-10",
+    "contains_business_records": false
+  },
+  "dependencies": {
+    "models": ["res.partner"],
+    "features": ["base_automation", "mail", "studio"]
+  },
+  "references": {
+    "TEST_EMAIL": {
+      "type": "email",
+      "purpose": "Destinatario autorizado para la prueba externa"
+    },
+    "TEST_WEBHOOK_URL": {
+      "type": "https_url",
+      "purpose": "Endpoint HTTPS de prueba, nunca producción"
+    },
+    "ACTIVITY_TYPE": {
+      "type": "xml_id",
+      "model": "mail.activity.type",
+      "purpose": "Tipo de actividad portable"
+    },
+    "ACTIVITY_USER": {
+      "type": "xml_id",
+      "model": "res.users",
+      "purpose": "Responsable de la actividad de prueba"
+    }
+  },
+  "computed_fields": [],
+  "mail_templates": [
+    {
+      "key": "test_email_template",
+      "name": "OdooAI Fase 3 - Correo de prueba",
+      "model": "res.partner",
+      "mode": "create",
+      "subject_file": "templates/subject.txt",
+      "subject_sha256": "e073dcf6ee0f5af9e075839bc87f3f274975bb4af9e1d274a0a51c09ce784252",
+      "body_html_file": "templates/body.html",
+      "body_html_sha256": "e42c5e811141289f2787db29c117921298a4eeb83be1fda6fb579e47d1b930d4",
+      "email_to": "{{TEST_EMAIL}}",
+      "use_default_to": false,
+      "auto_delete": true,
+      "active": true
+    }
+  ],
+  "server_actions": [
+    {
+      "key": "internal_log",
+      "name": "OdooAI Fase 3 - Registro interno",
+      "model": "res.partner",
+      "state": "code",
+      "mode": "create",
+      "sequence": 10,
+      "code_file": "actions/internal_log.py",
+      "code_sha256": "6aac6f327eb98ea330f1ae243065de663072aba4163a434c3b8ea41ef5b0b707"
+    },
+    {
+      "key": "followup_activity",
+      "name": "OdooAI Fase 3 - Actividad de seguimiento",
+      "model": "res.partner",
+      "state": "next_activity",
+      "mode": "create",
+      "sequence": 20,
+      "activity_type_reference": "{{ACTIVITY_TYPE}}",
+      "activity_summary": "Validar automatización Fase 3",
+      "activity_note_file": "activities/note.html",
+      "activity_note_sha256": "45d0f011aff20f9df70da5593d1e95fb2454a016596bdcea96888ee035fd5fea",
+      "activity_deadline_range": 1,
+      "activity_deadline_unit": "days",
+      "activity_user_reference": "{{ACTIVITY_USER}}"
+    },
+    {
+      "key": "internal_chain",
+      "name": "OdooAI Fase 3 - Cadena interna",
+      "model": "res.partner",
+      "state": "multi",
+      "mode": "create",
+      "sequence": 30,
+      "child_action_keys": ["internal_log", "followup_activity"]
+    },
+    {
+      "key": "email_notification",
+      "name": "OdooAI Fase 3 - Correo externo",
+      "model": "res.partner",
+      "state": "mail_post",
+      "mode": "create",
+      "sequence": 10,
+      "template_key": "test_email_template",
+      "mail_post_method": "email"
+    },
+    {
+      "key": "webhook_notification",
+      "name": "OdooAI Fase 3 - Webhook saliente",
+      "model": "res.partner",
+      "state": "webhook",
+      "mode": "create",
+      "sequence": 20,
+      "webhook_url": "{{TEST_WEBHOOK_URL}}",
+      "webhook_fields": ["name", "active"]
+    },
+    {
+      "key": "external_chain",
+      "name": "OdooAI Fase 3 - Cadena externa",
+      "model": "res.partner",
+      "state": "multi",
+      "mode": "create",
+      "sequence": 30,
+      "child_action_keys": ["email_notification", "webhook_notification"]
+    },
+    {
+      "key": "inbound_log",
+      "name": "OdooAI Fase 3 - Webhook entrante",
+      "model": "res.partner",
+      "state": "code",
+      "mode": "create",
+      "sequence": 40,
+      "code_file": "actions/inbound_log.py",
+      "code_sha256": "5c73f187528c83d859e0f2c4bd45b88b006e1379020a846b2b1490c5474ecd83"
+    }
+  ],
+  "automations": [
+    {
+      "key": "internal_on_create",
+      "name": "OdooAI Fase 3 - Interna al crear",
+      "model": "res.partner",
+      "mode": "create",
+      "trigger": "on_create",
+      "active": true,
+      "filter_domain_file": "domains/active_contacts.domain",
+      "filter_domain_sha256": "901ad52ab995f9af90f9d8096a9a21d0f0d0b33c272f0228569fba22b126d711",
+      "action_keys": ["internal_chain"]
+    },
+    {
+      "key": "external_on_create",
+      "name": "OdooAI Fase 3 - Externa al crear",
+      "model": "res.partner",
+      "mode": "create",
+      "trigger": "on_create",
+      "active": true,
+      "filter_domain_file": "domains/active_contacts.domain",
+      "filter_domain_sha256": "901ad52ab995f9af90f9d8096a9a21d0f0d0b33c272f0228569fba22b126d711",
+      "action_keys": ["external_chain"]
+    },
+    {
+      "key": "incoming_webhook",
+      "name": "OdooAI Fase 3 - Receptor webhook",
+      "model": "res.partner",
+      "mode": "create",
+      "trigger": "on_webhook",
+      "active": true,
+      "record_getter_file": "webhooks/record_getter.py",
+      "record_getter_sha256": "348faf00b892d8e735eacbdf007227516ffb890ed598d6cd29296eacb835ad6e",
+      "log_webhook_calls": true,
+      "action_keys": ["inbound_log"]
+    }
+  ],
+  "deployment_order": [
+    "computed_fields",
+    "mail_templates",
+    "server_actions",
+    "action_chains",
+    "automations",
+    "automation_bindings",
+    "activation_gates"
+  ],
+  "excluded_artifacts": [
+    "all_business_records",
+    "credentials",
+    "production_destinations"
+  ]
+}

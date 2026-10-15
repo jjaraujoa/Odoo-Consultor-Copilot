@@ -1,0 +1,38 @@
+{
+  "schema_version": 2,
+  "phase": 3,
+  "name": "reemplazar_slug",
+  "description": "Describir las automatizaciones sin datos de negocio.",
+  "source": {
+    "environment": "staging",
+    "odoo_version": "19",
+    "captured_on": "YYYY-MM-DD",
+    "contains_business_records": false,
+    "metadata_hashes": {}
+  },
+  "dependencies": {
+    "models": [],
+    "features": ["base_automation"]
+  },
+  "references": {},
+  "computed_fields": [],
+  "mail_templates": [],
+  "server_actions": [],
+  "views": [],
+  "automations": [],
+  "deployment_order": [
+    "computed_fields",
+    "mail_templates",
+    "server_actions",
+    "action_chains",
+    "views",
+    "automations",
+    "automation_bindings",
+    "activation_gates"
+  ],
+  "excluded_artifacts": [
+    "all_business_records",
+    "credentials",
+    "production_destinations"
+  ]
+}

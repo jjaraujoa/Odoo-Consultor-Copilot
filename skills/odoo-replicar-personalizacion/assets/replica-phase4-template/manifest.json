@@ -1,0 +1,37 @@
+{
+  "schema_version": 2,
+  "phase": 4,
+  "name": "reemplazar_slug",
+  "description": "Describir reportes, aprobaciones y seguridad sin datos de negocio.",
+  "source": {
+    "environment": "staging",
+    "odoo_version": "19",
+    "captured_on": "YYYY-MM-DD",
+    "contains_business_records": false,
+    "metadata_hashes": {}
+  },
+  "dependencies": {
+    "models": [],
+    "features": ["studio", "web_studio"]
+  },
+  "references": {},
+  "qweb_views": [],
+  "reports": [],
+  "approvals": [],
+  "access_controls": [],
+  "record_rules": [],
+  "negative_access_tests": [],
+  "deployment_order": [
+    "qweb_views",
+    "reports",
+    "approvals",
+    "access_controls",
+    "record_rules",
+    "negative_access_tests"
+  ],
+  "excluded_artifacts": [
+    "all_business_records",
+    "credentials",
+    "source_numeric_ids"
+  ]
+}

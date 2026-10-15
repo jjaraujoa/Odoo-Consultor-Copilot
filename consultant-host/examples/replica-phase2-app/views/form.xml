@@ -1,0 +1,17 @@
+<form string="Demo Fase 2">
+  <sheet>
+    <group>
+      <field name="x_name"/>
+      <field name="x_partner_id"/>
+      <field name="x_partner_name" readonly="1"/>
+      <field name="x_currency_id"/>
+      <field name="x_amount"/>
+      <field name="x_total_label" readonly="1"/>
+      <field name="x_status"/>
+      <field name="x_attachment" filename="x_attachment_name"/>
+      <field name="x_attachment_name" invisible="1"/>
+      <field name="x_tag_ids" widget="many2many_tags"/>
+      <field name="x_notes"/>
+    </group>
+  </sheet>
+</form>

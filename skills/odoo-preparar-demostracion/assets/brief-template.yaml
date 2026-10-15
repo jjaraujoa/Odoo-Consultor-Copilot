@@ -1,0 +1,27 @@
+schema_version: 4
+delivery_mode: database_records
+objetivo: ""
+audiencia: ""
+duracion_minutos: 30
+version_odoo: ""
+edicion: ""
+aplicacion: ""
+requerimientos: []
+restricciones: []
+componentes_comerciales:
+  website: false
+  survey: false
+  email_marketing: false
+  marketing_automation: false
+narrativa_utm:
+  fuente: ""
+  medio: ""
+  campana: ""
+  lead: ""
+  contacto: ""
+estados_seguros:
+  website: no_publicado
+  survey: inactivo
+  email_marketing: borrador
+  marketing_automation: inactivo
+efectos_externos: bloqueados

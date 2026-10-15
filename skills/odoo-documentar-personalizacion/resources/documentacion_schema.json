@@ -1,0 +1,190 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DocumentacionPersonalizacionOdoo",
+  "description": "Estructura estricta para la documentación y generación del acta Word de personalizaciones en Odoo",
+  "type": "object",
+  "required": [
+    "tabla_0_contexto",
+    "tabla_1_control",
+    "tabla_2_consideraciones",
+    "tabla_3_cuerpo"
+  ],
+  "properties": {
+    "tabla_0_contexto": {
+      "type": "object",
+      "required": [
+        "modulos",
+        "version_odoo",
+        "codigo_hu",
+        "codigo_gap_nombre",
+        "rol_solicitante",
+        "objetivo_funcional",
+        "justificacion_criterio_exito"
+      ],
+      "properties": {
+        "modulos": { "type": "string" },
+        "version_odoo": { "type": "string" },
+        "codigo_hu": { "type": "string" },
+        "codigo_gap_nombre": { "type": "string" },
+        "rol_solicitante": { "type": "string" },
+        "objetivo_funcional": { "type": "string" },
+        "justificacion_criterio_exito": { "type": "string" }
+      }
+    },
+    "tabla_1_control": {
+      "type": "object",
+      "required": [
+        "estimacion_horas",
+        "equipo_especialidad",
+        "mes_ano",
+        "consultor_responsable",
+        "fecha_entrega"
+      ],
+      "properties": {
+        "estimacion_horas": { "type": "string" },
+        "equipo_especialidad": { "type": "string" },
+        "mes_ano": { "type": "string" },
+        "consultor_responsable": { "type": "string" },
+        "fecha_entrega": { "type": "string" },
+        "etiqueta_entrega": { "type": "string", "default": "Fecha real de Entrega" }
+      }
+    },
+    "tabla_2_consideraciones": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "tabla_3_cuerpo": {
+      "type": "object",
+      "required": [
+        "seccion_1_objetivo",
+        "seccion_2_modelo_datos",
+        "seccion_3_vistas_ui",
+        "seccion_4_acciones_servidor",
+        "seccion_5_automatizaciones",
+        "seccion_6_plantillas_correo",
+        "seccion_7_pruebas_dod"
+      ],
+      "properties": {
+        "seccion_1_objetivo": { "type": "string" },
+        "seccion_2_modelo_datos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["modelo", "campos"],
+            "properties": {
+              "modelo": { "type": "string" },
+              "descripcion": { "type": "string" },
+              "campos": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["nombre_tecnico", "tipo"],
+                  "properties": {
+                    "nombre_tecnico": { "type": "string" },
+                    "etiqueta": { "type": "string" },
+                    "tipo": { "type": "string" },
+                    "widget": { "type": "string" },
+                    "notas": { "type": "string" }
+                  }
+                }
+              },
+              "notas_adicionales": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "titulo": { "type": "string" },
+                    "descripcion": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "seccion_3_vistas_ui": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["vista", "elementos"],
+            "properties": {
+              "vista": { "type": "string" },
+              "descripcion": { "type": "string" },
+              "elementos": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["titulo", "descripcion"],
+                  "properties": {
+                    "titulo": { "type": "string" },
+                    "descripcion": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "seccion_4_acciones_servidor": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["nombre", "modelo", "tipo"],
+            "properties": {
+              "nombre": { "type": "string" },
+              "modelo": { "type": "string" },
+              "tipo": { "type": "string" },
+              "logica": { "type": ["string", "array"] },
+              "codigo": { "type": "string" }
+            }
+          }
+        },
+        "seccion_5_automatizaciones": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["nombre", "modelo", "disparador", "accion"],
+            "properties": {
+              "nombre": { "type": "string" },
+              "modelo": { "type": "string" },
+              "disparador": { "type": "string" },
+              "campo_disparador": { "type": "string" },
+              "dominio_previo": { "type": "string" },
+              "dominio_posterior": { "type": "string" },
+              "dominio_filtro": { "type": "string" },
+              "accion": { "type": "string" },
+              "estado": { "type": "string" },
+              "justificacion": { "type": "string" },
+              "funcionalidad": { "type": "string" }
+            }
+          }
+        },
+        "seccion_6_plantillas_correo": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["nombre", "modelo"],
+            "properties": {
+              "nombre": { "type": "string" },
+              "modelo": { "type": "string" },
+              "asunto": { "type": "string" },
+              "informes_adjuntos": { "type": "string" },
+              "cuerpo_html": { "type": "string" }
+            }
+          }
+        },
+        "seccion_7_pruebas_dod": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["titulo", "condicion", "resultado_esperado"],
+            "properties": {
+              "titulo": { "type": "string" },
+              "condicion": { "type": "string" },
+              "resultado_esperado": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}
